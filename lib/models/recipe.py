@@ -14,13 +14,16 @@ class Recipe(Base):
     @property
     def ingredients(self):
         return [ri.ingredient for ri in self.recipe_ingredients]
+    
+    def add_ingredient(self, ingredient):
+        pass
 
     @classmethod
-    def get_recipe(cls, recipe_name, session):
+    def get_recipe(cls, recipe_name):
         return session.query(cls).filter(cls.name == recipe_name).first()
     
     @classmethod
-    def all(cls, session):
+    def all(cls):
         return session.query(cls).all()
 
     def __repr__(self):

@@ -26,17 +26,18 @@ if __name__=='__main__':
         elif user_input == "search recipe by ingredient":
             ingredient_inputs = input("Enter ingredients:\n> ")
             #assume all ingredients are valid
-            ingredient_list = [Ingredient.get_ingredient(i.strip(), session) for i in ingredient_inputs.split(',')]
-            recipes = [recipe for recipe in Recipe.all(session) if all(i in recipe.ingredients for i in ingredient_list)]
+            ingredient_list = [Ingredient.get_ingredient(i.strip()) for i in ingredient_inputs.split(',')]
+            recipes = [recipe for recipe in Recipe.all() if all(i in recipe.ingredients for i in ingredient_list)]
             if len(recipes) > 0:
                 print("You can cook:")
                 for r in recipes:
                     print(r)
             else:
                 print("You can't cook anything with those :(")
+        
         elif user_input == "search recipe":
             recipe_name = input("Enter recipe name:\n> ")
-            recipe = Recipe.get_recipe(recipe_name, session)
+            recipe = Recipe.get_recipe(recipe_name)
             print(recipe.name)
             print('Ingredients:')
             for i in recipe.ingredients:
@@ -45,11 +46,16 @@ if __name__=='__main__':
 
         elif user_input == "search ingredient":
             ingredient_name = input("Enter ingredient name:\n> ")
-            ingredient = Ingredient.get_ingredient(ingredient_name, session)
+            ingredient = Ingredient.get_ingredient(ingredient_name)
             if ingredient:
                 print(f'{str(ingredient)} is in the database')
             else:
                 print(f'{ingredient_name} not found ¯\_(ツ)_/¯')
+
+        elif user_input == "add ingredient to recipe":
+            #assume valid recipe and ingredient
+            ingredient_name = input("Enter ingredient name:\n> ")
+            recipe_name = input("Enter recipe name:\n> ")
         
         elif user_input == "help":
             print("ask emiley")

@@ -15,7 +15,7 @@ class Ingredient(Base):
         return [ri.recipe for ri in self.recipe_ingredients]
 
     @classmethod
-    def get_ingredient(cls, ingredient_name, session):
+    def get_ingredient(cls, ingredient_name):
         return session.query(cls).filter(cls.name == ingredient_name).first()
 
     def __repr__(self):
