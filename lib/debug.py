@@ -2,6 +2,7 @@
 import ipdb
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from models import *
 
 #from <file> import <class>
 
