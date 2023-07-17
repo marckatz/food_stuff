@@ -56,6 +56,10 @@ if __name__=='__main__':
             #assume valid recipe and ingredient
             ingredient_name = input("Enter ingredient name:\n> ")
             recipe_name = input("Enter recipe name:\n> ")
+            ingredient = Ingredient.get_ingredient(ingredient_name)
+            recipe = Recipe.get_recipe(recipe_name)
+            recipe.add_ingredient(ingredient)
+            print(f'Added {ingredient_name} to {recipe_name}')
         
         elif user_input == "help":
             print("ask emiley")

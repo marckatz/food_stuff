@@ -16,7 +16,13 @@ class Recipe(Base):
         return [ri.ingredient for ri in self.recipe_ingredients]
     
     def add_ingredient(self, ingredient):
-        pass
+        from .recipe_ingredient import RecipeIngredient
+        ri = RecipeIngredient(
+            recipe_id = self.id,
+            ingredient_id = ingredient.id
+        )
+        session.add(ri)
+        session.commit()
 
     @classmethod
     def get_recipe(cls, recipe_name):
