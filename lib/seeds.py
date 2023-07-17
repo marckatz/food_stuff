@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-from lib.foodstuff import Base, session
-
+from foodstuff import Base, session
 from models import *
+
 if __name__ == '__main__':
 
     #delete existing tables
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     cookie_recipe = Recipe(directions='just cook it lol')
     blt_recipe = Recipe(directions='put it all together')
 
-    session.add([cookie_recipe, blt_recipe])
+    session.add_all([cookie_recipe, blt_recipe])
     session.commit()
 
     session.close()
