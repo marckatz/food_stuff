@@ -21,7 +21,8 @@ if __name__=='__main__':
             recipe_name = input("Recipe name:\n> ")
             recipe_directions = input("Directions:\n> ")
             recipe = Recipe(name=recipe_name, directions=recipe_directions)
-            #add recipe to database
+            session.add(recipe)
+            session.commit()
         
         elif user_input == "search recipe by ingredient":
             ingredient_inputs = input("Enter ingredients:\n> ")
@@ -62,7 +63,7 @@ if __name__=='__main__':
             print(f'Added {ingredient_name} to {recipe_name}')
         
         elif user_input == "help":
-            print("ask emiley")
+            print("ask Emiley")
 
 
         elif user_input != "close":
