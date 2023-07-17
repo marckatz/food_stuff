@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 import ipdb
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import *
+from lib.foodstuff import session
+from lib.models import *
 
 if __name__=='__main__':
-    engine = create_engine('sqlite:///../food_stuff.db')
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    # engine = create_engine('sqlite:///../food_stuff.db')
+    # Session = sessionmaker(bind=engine)
+    # session = Session()
 
     ingredients = session.query(Ingredient).all()
     recipes = session.query(Recipe).all()

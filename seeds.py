@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-from foodstuff import Base, session
-from models import *
+from lib.foodstuff import session
+from lib.models import *
 
 if __name__ == '__main__':
+    # engine = create_engine('sqlite:///../food_stuff.db')
+    # Session = sessionmaker(bind=engine)
+    # session = Session()
 
     #delete existing tables
     session.query(Recipe).delete()

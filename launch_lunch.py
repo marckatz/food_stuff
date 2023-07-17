@@ -28,7 +28,7 @@ if __name__=='__main__':
             #assume all ingredients are valid
             ingredient_list = [Ingredient.get_ingredient(i.strip(), session) for i in ingredient_inputs.split(',')]
             recipes = [recipe for recipe in Recipe.all(session) if all(i in recipe.ingredients for i in ingredient_list)]
-            if len(r) > 0:
+            if len(recipes) > 0:
                 print("You can cook:")
                 for r in recipes:
                     print(r)
