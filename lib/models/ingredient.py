@@ -9,3 +9,6 @@ class Ingredient(Base):
     name = Column(String())
 
     recipe_ingredients = relationship('RecipeIngredient', cascade='all, delete-orphan')
+
+    def __repr__(self):
+        return f'<Ingredient {self.id}: {self.name}>'

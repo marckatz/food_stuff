@@ -11,6 +11,9 @@ if __name__=='__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
+    ingredients = session.query(Ingredient).all()
+    recipes = session.query(Recipe).all()
+    recipe_ingredients = session.query(RecipeIngredient).all()
 
     ipdb.set_trace()
 

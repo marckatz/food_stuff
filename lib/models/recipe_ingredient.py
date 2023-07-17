@@ -13,3 +13,6 @@ class RecipeIngredient(Base):
     recipe = relationship('Recipe', back_populates='recipe_ingredients')
 
     ingredient = relationship('Ingredient', back_populates='recipe_ingredients')
+
+    def __repr__(self):
+        return f'<RecipeIngredient {self.id}: Recipe {self.recipe.name}, Ingredient {self.ingredient.name}>'
