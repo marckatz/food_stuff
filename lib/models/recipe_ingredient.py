@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Float, ForeignKey
-from foodstuff import Base, session
+from ..foodstuff import Base, session
 from sqlalchemy.orm import relationship
 
 class RecipeIngredient(Base):
