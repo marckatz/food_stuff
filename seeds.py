@@ -3,18 +3,17 @@ from lib.foodstuff import session
 from lib.models import *
 
 if __name__ == '__main__':
-    # engine = create_engine('sqlite:///../food_stuff.db')
-    # Session = sessionmaker(bind=engine)
-    # session = Session()
 
     #delete existing tables
     session.query(Recipe).delete()
     session.query(RecipeIngredient).delete()
     session.query(Ingredient).delete()
+    session.query(FridgeIngredient).delete()
+    session.query(Fridge).delete()
 
     ingredient_names = ['water', 'milk', 'eggs', 'sugar', 'oil', 'butter', 
                         'flour', 'chocolate chips', 'baking soda', 'tomato', 
-                        'bread', 'lettuce', 'mayo']
+                        'bread', 'lettuce', 'mayo', 'bacon']
     for i in ingredient_names:
         session.add(Ingredient(name=i))
     session.commit()
@@ -25,8 +24,8 @@ if __name__ == '__main__':
     session.add_all([cookie_recipe, blt_recipe])
     session.commit()
 
-    cookie_ingredient_ids = [1,2,3,4,6,7,8,9]
-    blt_ingredient_ids = [10,11,12,13]
+    cookie_ingredient_ids = [3,4,6,7,8,9]
+    blt_ingredient_ids = [10,11,12,13,14]
     for i in cookie_ingredient_ids:
         session.add(RecipeIngredient(
             ingredient_id = i,
