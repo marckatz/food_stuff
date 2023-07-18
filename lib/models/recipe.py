@@ -26,6 +26,19 @@ class Recipe(Base):
         session.add(ri)
         session.commit()
 
+    #only removes first instance of <ingredient>
+    def remove_ingredient(self, ingredient):
+        from .recipe_ingredient import RecipeIngredient
+        ri = session.query(RecipeIngredient).filter(
+            RecipeIngredient.ingredient_id == ingredient.id,
+            RecipeIngredient.recipe_id == self.id).first()
+        session.delete(ri)
+        session.commit()
+
+    def update_directions(self, new_directions):
+        self.directions = new_directions
+        session.commit()
+
     @classmethod
     def get_recipe(cls, recipe_name):
         return session.query(cls).filter(cls.name == recipe_name).first()
