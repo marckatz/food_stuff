@@ -4,9 +4,11 @@ from lib.foodstuff import session
 
 if __name__=='__main__':
     print("Welcome to the program")
+    login = input("Enter Name:\n> ")
+    current_fridge = Fridge.get_fridge(login)
     user_input = ""
     while user_input != 'close':
-        user_input = input("\nWhat do you want to do?\n> ")
+        user_input = input("\nWhat do you want to do?\n> ").strip().lower()
 
         if user_input == "add ingredient":
             ingredient_name = input("Ingredient name:\n> ")
@@ -83,8 +85,26 @@ if __name__=='__main__':
         elif user_input == "help":
             print("ask Emiley")
 
+        elif user_input == "open fridge":
+            for i in current_fridge.ingredients:
+                print(str(i))
+
+        elif user_input == "add ingredient to fridge":
+            ingredient_name = input("Enter ingredient name:\n> ")
+            ingredient = Ingredient.get_ingredient(ingredient_name)
+            current_fridge.add_ingredient(ingredient)
+            print(f'Added {ingredient.name} to {current_fridge.user}\'s fridge!')
+       
+        elif user_input == "remove ingredient from fridge":
+            # assume ingredient is in current_fridge and is valid ingredient
+            ingredient_name = input("Enter ingredient name:\n> ")
+            ingredient = Ingredient.get_ingredient(ingredient_name)
+            current_fridge.remove_ingredient(ingredient)
+            print(f'Removed {str(ingredient)}')
 
         elif user_input != "close":
             print("Invalid input dummy")
+
+        
 
     print("Bye bye!")

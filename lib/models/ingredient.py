@@ -20,7 +20,12 @@ class Ingredient(Base):
 
     @classmethod
     def get_ingredient(cls, ingredient_name):
-        return session.query(cls).filter(cls.name == ingredient_name).first()
+        ingredient = session.query(cls).filter(cls.name == ingredient_name).first()
+        if not ingredient:
+            ingredient = Ingredient(name = ingredient_name)
+            session.add(ingredient)
+            session.commit()
+        return ingredient
 
     def __repr__(self):
         return f'<Ingredient {self.id}: {self.name}>'

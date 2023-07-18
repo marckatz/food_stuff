@@ -28,13 +28,18 @@ class Fridge(Base):
 
     def remove_ingredient(self, ingredient):
         fi = [fi for fi in self.fridge_ingredients if fi.ingredient == ingredient][0]
-        session.remove(fi)
+        session.delete(fi)
         session.commit()
 
     @classmethod
     def get_fridge(cls, username):
-        return session.query(cls).filter(cls.user == username).first()
-    
+        user_fridge = session.query(cls).filter(cls.user == username).first()
+        if not user_fridge:
+            user_fridge = Fridge(user = username)
+            session.add(user_fridge)
+            session.commit()
+        return user_fridge
+
     def __repr__(self):
         return f'<Fridge {self.id}: {self.user}>'
         
