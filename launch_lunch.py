@@ -70,6 +70,14 @@ if __name__=='__main__':
             recipe.remove_ingredient(ingredient)
             print(f'Removed {ingredient_name} from {recipe.name}')
 
+        elif user_input == "update recipe":
+            recipe_name = input("Enter recipe name:\n> ")
+            recipe = Recipe.get_recipe(recipe_name)
+            print("Old recipe directions:")
+            print(recipe.directions)
+            new_recipe_directions = input("Enter new recipe directions:\n> ")
+            recipe.update_directions(new_recipe_directions)
+            print("Updated recipe")
 
         elif user_input == "help":
             print("ask Emiley")

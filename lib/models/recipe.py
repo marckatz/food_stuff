@@ -33,6 +33,9 @@ class Recipe(Base):
         session.delete(ri)
         session.commit()
 
+    def update_directions(self, new_directions):
+        self.directions = new_directions
+        session.commit()
 
     @classmethod
     def get_recipe(cls, recipe_name):
