@@ -9,6 +9,7 @@ class Ingredient(Base):
     name = Column(String())
 
     recipe_ingredients = relationship('RecipeIngredient', cascade='all, delete-orphan')
+    fridge_ingredients = relationship('FridgeIngredient', cascade='all, delete-orphan')
 
     @property
     def recipes(self):

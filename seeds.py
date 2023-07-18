@@ -38,4 +38,8 @@ if __name__ == '__main__':
         ))
     session.commit()
 
+    fridge1 = Fridge(user='Marc')
+    session.add(fridge1)
+    session.commit()
+    
     session.close()

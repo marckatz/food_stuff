@@ -1,9 +1,18 @@
-from sqlalchemy import Column, Integer 
+from sqlalchemy import Column, Integer, ForeignKey 
+from sqlalchemy.orm import relationship 
 from ..foodstuff import Base, session
+
 
 class FridgeIngredient(Base):
     __tablename__ = 'fridge_ingredients'
 
     id = Column(Integer(), primary_key=True)
-    recipe_id = Column(Integer())
-    ingredient_id = Column(Integer())
+    fridge_id = Column(Integer(), ForeignKey('fridges.id'))
+    ingredient_id = Column(Integer(), ForeignKey('ingredients.id'))
+
+    fridge = relationship('Fridge', back_populates='fridge_ingredients')
+
+    ingredient = relationship('Ingredient', back_populates='fridge_ingredients')
+
+    def __repr__(self):
+        return f'<FridgeIngredient {self.id}: Fridge {self.fridge.name}, Ingredient {self.ingredient.name}>'
