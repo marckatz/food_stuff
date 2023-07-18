@@ -1,5 +1,8 @@
 from sqlalchemy import Column, String, Integer
-from ..foodstuff import Base, session
+if 'lib' in __name__:
+    from lib.foodstuff import Base, session
+else:
+    from foodstuff import Base, session
 from sqlalchemy.orm import relationship
 
 class Recipe(Base):

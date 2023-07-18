@@ -1,6 +1,9 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
-from ..foodstuff import Base, session
+if 'lib' in __name__:
+    from lib.foodstuff import Base, session
+else:
+    from foodstuff import Base, session
 
 class Fridge(Base):
     __tablename__ = 'fridges'
