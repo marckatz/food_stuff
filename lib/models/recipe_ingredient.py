@@ -8,8 +8,6 @@ class RecipeIngredient(Base):
     id = Column(Integer(), primary_key=True)
     recipe_id = Column(Integer(), ForeignKey('recipes.id'))
     ingredient_id = Column(Integer(), ForeignKey('ingredients.id'))
-    amount = Column(Float())
-    unit = Column(String())
 
     recipe = relationship('Recipe', back_populates='recipe_ingredients')
 

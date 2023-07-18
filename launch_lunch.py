@@ -6,7 +6,8 @@ if __name__=='__main__':
     print("Welcome to the program")
     user_input = ""
     while user_input != 'close':
-        user_input = input("What do you want to do?\n> ")
+        user_input = input("\nWhat do you want to do?\n> ")
+
         if user_input == "add ingredient":
             ingredient_name = input("Ingredient name:\n> ")
             ingredient = Ingredient(name=ingredient_name)
@@ -68,7 +69,7 @@ if __name__=='__main__':
             ingredient = Ingredient.get_ingredient(ingredient_name)
             recipe = Recipe.get_recipe(recipe_name)
             recipe.remove_ingredient(ingredient)
-            print(f'Removed {ingredient_name} from {recipe.name}')
+            print(f'Removed {ingredient_name} from {recipe_name}')
 
         elif user_input == "update recipe":
             recipe_name = input("Enter recipe name:\n> ")
@@ -85,3 +86,5 @@ if __name__=='__main__':
 
         elif user_input != "close":
             print("Invalid input dummy")
+
+    print("Bye bye!")

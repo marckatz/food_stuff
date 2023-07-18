@@ -24,10 +24,8 @@ if __name__ == '__main__':
     session.add_all([cookie_recipe, blt_recipe])
     session.commit()
 
-    cookie_ingredient_ids =     [3,4,6,7,8,9]
-    cookie_ingredient_amounts = [2, 2, 1]
-    cookie_ingredient_units =   ["", "cups", "cup", ]
-    blt_ingredient_ids = [10,11,12,13, 14]
+    cookie_ingredient_ids = [3,4,6,7,8,9]
+    blt_ingredient_ids = [10,11,12,13,14]
     for i in cookie_ingredient_ids:
         session.add(RecipeIngredient(
             ingredient_id = i,

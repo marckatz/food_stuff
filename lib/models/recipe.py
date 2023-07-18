@@ -15,13 +15,11 @@ class Recipe(Base):
     def ingredients(self):
         return [ri.ingredient for ri in self.recipe_ingredients]
     
-    def add_ingredient(self, ingredient, amount, unit):
+    def add_ingredient(self, ingredient):
         from .recipe_ingredient import RecipeIngredient
         ri = RecipeIngredient(
             recipe_id = self.id,
-            ingredient_id = ingredient.id,
-            amount = amount,
-            unit = unit
+            ingredient_id = ingredient.id
         )
         session.add(ri)
         session.commit()
