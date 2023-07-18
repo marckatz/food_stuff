@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
 from lib.models import *
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from lib.foodstuff import session
 
 if __name__=='__main__':
-    engine = create_engine('sqlite:///food_stuff.db')
-    Session = sessionmaker(bind=engine)
-    session = Session()
     print("Welcome to the program")
     user_input = ""
     while user_input != 'close':
         user_input = input("What do you want to do?\n> ")
-        if user_input == "add ingredient": #input will include ingredient name
+        if user_input == "add ingredient":
             ingredient_name = input("Ingredient name:\n> ")
             ingredient = Ingredient(name=ingredient_name)
             session.add(ingredient)
@@ -39,11 +35,14 @@ if __name__=='__main__':
         elif user_input == "search recipe":
             recipe_name = input("Enter recipe name:\n> ")
             recipe = Recipe.get_recipe(recipe_name)
-            print(recipe.name)
-            print('Ingredients:')
-            for i in recipe.ingredients:
-                print(i)
-            print(recipe.directions)
+            if recipe:
+                print(recipe.name)
+                print('Ingredients:')
+                for i in recipe.ingredients:
+                    print(i)
+                print(recipe.directions)
+            else:
+                print(f'{recipe_name} not found ¯\_(ツ)_/¯')
 
         elif user_input == "search ingredient":
             ingredient_name = input("Enter ingredient name:\n> ")
@@ -62,6 +61,16 @@ if __name__=='__main__':
             recipe.add_ingredient(ingredient)
             print(f'Added {ingredient_name} to {recipe_name}')
         
+        elif user_input == "remove ingredient from recipe":
+            #assume valid recipe and ingredient, and ingredient is in recipe
+            ingredient_name = input("Enter ingredient name:\n> ")
+            recipe_name = input("Enter recipe name:\n> ")
+            ingredient = Ingredient.get_ingredient(ingredient_name)
+            recipe = Recipe.get_recipe(recipe_name)
+            recipe.remove_ingredient(ingredient)
+            print(f'Removed {ingredient_name} from {recipe.name}')
+
+
         elif user_input == "help":
             print("ask Emiley")
 
