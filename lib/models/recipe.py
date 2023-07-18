@@ -50,3 +50,6 @@ class Recipe(Base):
 
     def __repr__(self):
         return f'<Recipe {self.id}: {self.name}>'
+    
+    def __str__(self):
+        return self.name

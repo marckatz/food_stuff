@@ -31,7 +31,7 @@ if __name__=='__main__':
             if len(recipes) > 0:
                 print("You can cook:")
                 for r in recipes:
-                    print(r)
+                    print(str(r))
             else:
                 print("You can't cook anything with those :(")
         
@@ -89,11 +89,13 @@ if __name__=='__main__':
             for i in current_fridge.ingredients:
                 print(str(i))
 
-        elif user_input == "add ingredient to fridge":
-            ingredient_name = input("Enter ingredient name:\n> ")
-            ingredient = Ingredient.get_ingredient(ingredient_name)
-            current_fridge.add_ingredient(ingredient)
-            print(f'Added {ingredient.name} to {current_fridge.user}\'s fridge!')
+        elif user_input == "add ingredients to fridge":
+            ingredient_inputs = input("Enter ingredients:\n> ")
+            #assume all ingredients are valid
+            ingredient_list = [Ingredient.get_ingredient(i.strip()) for i in ingredient_inputs.split(',')]
+            for ingredient in ingredient_list:
+                current_fridge.add_ingredient(ingredient)
+                print(f'Added {ingredient.name} to {current_fridge.user}\'s fridge!')
        
         elif user_input == "remove ingredient from fridge":
             # assume ingredient is in current_fridge and is valid ingredient
@@ -101,6 +103,21 @@ if __name__=='__main__':
             ingredient = Ingredient.get_ingredient(ingredient_name)
             current_fridge.remove_ingredient(ingredient)
             print(f'Removed {str(ingredient)}')
+
+        elif user_input == "get available recipes":
+            recipes = [recipe for recipe in Recipe.all() if all(i in current_fridge.ingredients for i in recipe.ingredients)]
+            if len(recipes) > 0:
+                print("You can cook:")
+                for r in recipes:
+                    print(str(r))
+            else:
+                print("You can't make anything with what's in your fridge :(")
+
+        elif user_input == "swap user":
+            login = input("Enter Name:\n> ")
+            current_fridge = Fridge.get_fridge(login)
+            print(f'Welcome to your fridge, {login}!')
+
 
         elif user_input != "close":
             print("Invalid input dummy")
