@@ -22,6 +22,10 @@ if __name__=='__main__':
             recipe = Recipe(name=recipe_name, directions=recipe_directions)
             session.add(recipe)
             session.commit()
+
+        elif user_input == "show all recipes":
+            for recipe in Recipe.all():
+                print(str(recipe))
         
         elif user_input == "search recipe by ingredient":
             ingredient_inputs = input("Enter ingredients:\n> ")
@@ -96,7 +100,7 @@ if __name__=='__main__':
             for ingredient in ingredient_list:
                 current_fridge.add_ingredient(ingredient)
                 print(f'Added {ingredient.name} to {current_fridge.user}\'s fridge!')
-       
+
         elif user_input == "remove ingredient from fridge":
             # assume ingredient is in current_fridge and is valid ingredient
             ingredient_name = input("Enter ingredient name:\n> ")
