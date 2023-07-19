@@ -3,7 +3,7 @@ from lib.models import *
 from lib.foodstuff import session
 
 if __name__=='__main__':
-    print("Welcome to the program")
+    print("Welcome to Pantry Planner!")
     login = input("Enter Name:\n> ")
     current_fridge = Fridge.get_fridge(login)
     user_input = ""
@@ -87,7 +87,7 @@ if __name__=='__main__':
             print("Updated recipe")
 
         elif user_input == "help":
-            print("ask Emiley")
+            print("Commands: \nadd ingredient\nadd recipe\nshow all recipes\nsearch recipe by ingredient\nsearch recipe\nsearch ingredient\nadd ingredient to recipe\nremove ingredient from recipe\nupdate recipe\nopen fridge\nadd ingredients to fridge\nremove ingredient from fridge\nget available recipes\nswap user\nclose")
 
         elif user_input == "open fridge":
             for i in current_fridge.ingredients:
@@ -115,7 +115,7 @@ if __name__=='__main__':
                 for r in recipes:
                     print(str(r))
             else:
-                print("You can't make anything with what's in your fridge :(")
+                print("You can't make anything with what's in your fridge :(\nAdd some more ingredients to your fridge to see some recipes!")
 
         elif user_input == "swap user":
             login = input("Enter Name:\n> ")
