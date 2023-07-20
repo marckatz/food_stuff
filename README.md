@@ -1,4 +1,4 @@
-Welcome to Pantry Planner!
+Welcome to Pantry Planner! 🥚🥓🥫🥑🥔🍎🍞🧀🥦
 
 RecipeFinder is a CLI where you, the user, can interact with your virtual fridge in order to plan out your meals. You can add ingredients to your fridge, create new recipes, and see what recipes you can make with the ingredients that you have in your fridge!
 
