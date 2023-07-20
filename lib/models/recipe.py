@@ -33,8 +33,11 @@ class Recipe(Base):
         ri = session.query(RecipeIngredient).filter(
             RecipeIngredient.ingredient_id == ingredient.id,
             RecipeIngredient.recipe_id == self.id).first()
-        session.delete(ri)
-        session.commit()
+        if ri:
+            session.delete(ri)
+            session.commit()
+        else:
+            raise Exception(f'{str(ingredient)} is not in {str(self)}')
 
     def update_directions(self, new_directions):
         self.directions = new_directions

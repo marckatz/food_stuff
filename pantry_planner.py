@@ -12,10 +12,8 @@ if __name__=='__main__':
 
         if user_input == "add ingredient":
             ingredient_name = input("Ingredient name:\n> ")
-            ingredient = Ingredient(name=ingredient_name)
-            session.add(ingredient)
-            session.commit()
-        
+            ingredient = Ingredient.get_ingredient(ingredient_name, add_otherwise=True)
+
         elif user_input == "add recipe":
             recipe_name = input("Recipe name:\n> ")
             recipe_directions = input("Directions:\n> ")
@@ -26,10 +24,9 @@ if __name__=='__main__':
         elif user_input == "show all recipes":
             for recipe in Recipe.all():
                 print(str(recipe))
-        
+
         elif user_input == "search recipe by ingredient":
             ingredient_inputs = input("Enter ingredients:\n> ")
-            #assume all ingredients are valid
             ingredient_list = [Ingredient.get_ingredient(i.strip()) for i in ingredient_inputs.split(',')]
             recipes = [recipe for recipe in Recipe.all() if all(i in recipe.ingredients for i in ingredient_list)]
             if len(recipes) > 0:
@@ -38,7 +35,7 @@ if __name__=='__main__':
                     print(str(r))
             else:
                 print("You can't cook anything with those :(")
-        
+
         elif user_input == "search recipe":
             recipe_name = input("Enter recipe name:\n> ")
             recipe = Recipe.get_recipe(recipe_name)
@@ -46,10 +43,10 @@ if __name__=='__main__':
                 print(recipe.name)
                 print('Ingredients:')
                 for i in recipe.ingredients:
-                    print(i)
+                    print(str(i))
                 print(recipe.directions)
             else:
-                print(f'{recipe_name} not found ¯\_(ツ)_/¯')
+                print(f'"{recipe_name}" not found ¯\_(ツ)_/¯')
 
         elif user_input == "search ingredient":
             ingredient_name = input("Enter ingredient name:\n> ")
@@ -57,34 +54,44 @@ if __name__=='__main__':
             if ingredient:
                 print(f'{str(ingredient)} is in the database')
             else:
-                print(f'{ingredient_name} not found ¯\_(ツ)_/¯')
+                print(f'"{ingredient_name}" not found ¯\_(ツ)_/¯')
 
         elif user_input == "add ingredient to recipe":
-            #assume valid recipe and ingredient
-            ingredient_name = input("Enter ingredient name:\n> ")
             recipe_name = input("Enter recipe name:\n> ")
-            ingredient = Ingredient.get_ingredient(ingredient_name)
+            ingredient_name = input("Enter ingredient name:\n> ")
             recipe = Recipe.get_recipe(recipe_name)
-            recipe.add_ingredient(ingredient)
-            print(f'Added {ingredient_name} to {recipe_name}')
-        
+            if recipe:
+                ingredient = Ingredient.get_ingredient(ingredient_name, add_otherwise=True)
+                recipe.add_ingredient(ingredient)
+                print(f'Added {ingredient_name} to the {recipe_name} recipe')
+            else:
+                print(f'"{recipe_name}" not found ¯\_(ツ)_/¯')
+
         elif user_input == "remove ingredient from recipe":
-            #assume valid recipe and ingredient, and ingredient is in recipe
             ingredient_name = input("Enter ingredient name:\n> ")
             recipe_name = input("Enter recipe name:\n> ")
             ingredient = Ingredient.get_ingredient(ingredient_name)
             recipe = Recipe.get_recipe(recipe_name)
-            recipe.remove_ingredient(ingredient)
-            print(f'Removed {ingredient_name} from {recipe_name}')
+            if recipe:
+                try:
+                    recipe.remove_ingredient(ingredient)
+                    print(f'Removed {ingredient_name} from {recipe_name}')
+                except Exception as e:
+                    print(e)
+            else:
+                print(f'"{recipe_name}" not found ¯\_(ツ)_/¯')
 
         elif user_input == "update recipe":
             recipe_name = input("Enter recipe name:\n> ")
             recipe = Recipe.get_recipe(recipe_name)
-            print("Old recipe directions:")
-            print(recipe.directions)
-            new_recipe_directions = input("Enter new recipe directions:\n> ")
-            recipe.update_directions(new_recipe_directions)
-            print("Updated recipe")
+            if recipe:
+                print("Old recipe directions:")
+                print(recipe.directions)
+                new_recipe_directions = input("Enter new recipe directions:\n> ")
+                recipe.update_directions(new_recipe_directions)
+                print("Updated recipe")
+            else:
+                print(f'"{recipe_name}" not found ¯\_(ツ)_/¯')
 
         elif user_input == "help":
             print("Commands: \nadd ingredient\nadd recipe\nshow all recipes\nsearch recipe by ingredient\nsearch recipe\nsearch ingredient\nadd ingredient to recipe\nremove ingredient from recipe\nupdate recipe\nopen fridge\nadd ingredients to fridge\nremove ingredient from fridge\nget available recipes\nswap user\nclose")
@@ -95,18 +102,22 @@ if __name__=='__main__':
 
         elif user_input == "add ingredients to fridge":
             ingredient_inputs = input("Enter ingredients:\n> ")
-            #assume all ingredients are valid
-            ingredient_list = [Ingredient.get_ingredient(i.strip()) for i in ingredient_inputs.split(',')]
+            ingredient_list = [Ingredient.get_ingredient(i.strip(), add_otherwise=True) for i in ingredient_inputs.split(',')]
             for ingredient in ingredient_list:
                 current_fridge.add_ingredient(ingredient)
                 print(f'Added {ingredient.name} to {current_fridge.user}\'s fridge!')
 
         elif user_input == "remove ingredient from fridge":
-            # assume ingredient is in current_fridge and is valid ingredient
             ingredient_name = input("Enter ingredient name:\n> ")
             ingredient = Ingredient.get_ingredient(ingredient_name)
-            current_fridge.remove_ingredient(ingredient)
-            print(f'Removed {str(ingredient)}')
+            if ingredient:
+                try:
+                    current_fridge.remove_ingredient(ingredient)
+                    print(f'Removed {str(ingredient)}')
+                except Exception as e:
+                    print(e)
+            else:
+                print(f'"{ingredient_name}" is not valid')
 
         elif user_input == "get available recipes":
             recipes = [recipe for recipe in Recipe.all() if all(i in current_fridge.ingredients for i in recipe.ingredients)]
@@ -126,6 +137,5 @@ if __name__=='__main__':
         elif user_input != "close":
             print("Invalid input dummy")
 
-        
 
     print("Bye bye!")

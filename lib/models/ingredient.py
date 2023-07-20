@@ -19,9 +19,9 @@ class Ingredient(Base):
         return [ri.recipe for ri in self.recipe_ingredients]
 
     @classmethod
-    def get_ingredient(cls, ingredient_name):
+    def get_ingredient(cls, ingredient_name, add_otherwise=False):
         ingredient = session.query(cls).filter(cls.name == ingredient_name).first()
-        if not ingredient:
+        if not ingredient and add_otherwise:
             ingredient = Ingredient(name = ingredient_name)
             session.add(ingredient)
             session.commit()

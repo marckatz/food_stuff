@@ -18,4 +18,4 @@ class FridgeIngredient(Base):
     ingredient = relationship('Ingredient', back_populates='fridge_ingredients')
 
     def __repr__(self):
-        return f'<FridgeIngredient {self.id}: Fridge {self.fridge.name}, Ingredient {self.ingredient.name}>'
+        return f'<FridgeIngredient {self.id}: Fridge {self.fridge.user}, Ingredient {self.ingredient.name}>'

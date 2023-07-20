@@ -27,9 +27,13 @@ class Fridge(Base):
         session.commit()
 
     def remove_ingredient(self, ingredient):
-        fi = [fi for fi in self.fridge_ingredients if fi.ingredient == ingredient][0]
-        session.delete(fi)
-        session.commit()
+        fi = [fi for fi in self.fridge_ingredients if fi.ingredient == ingredient]
+        if len(fi) > 0:
+            fi = fi[0]
+            session.delete(fi)
+            session.commit()
+        else:
+            raise Exception(f'{str(ingredient)} is not in {self.user}\'s fridge')
 
     @classmethod
     def get_fridge(cls, username):
