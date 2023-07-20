@@ -38,10 +38,10 @@ class Fridge(Base):
     @classmethod
     def get_fridge(cls, username):
         user_fridge = session.query(cls).filter(cls.user == username).first()
-        if not user_fridge:
-            user_fridge = Fridge(user = username)
-            session.add(user_fridge)
-            session.commit()
+        # if not user_fridge:
+        #     user_fridge = Fridge(user = username)
+        #     session.add(user_fridge)
+        #     session.commit()
         return user_fridge
 
     def __repr__(self):

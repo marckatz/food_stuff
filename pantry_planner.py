@@ -2,10 +2,27 @@
 from lib.models import *
 from lib.foodstuff import session
 
+def login():
+    is_logged_in = False
+    while not is_logged_in:
+        login = input("Enter Name:\n> ")
+        current_fridge = Fridge.get_fridge(login)
+        if current_fridge:
+            is_logged_in = True
+        else:
+            print(f'{login}\'s fridge not found')
+            add_new = input('Would you like to add a new fridge (y/n)?\n> ').strip().lower()
+            if add_new == 'y' or add_new == 'yes':
+                current_fridge = Fridge(user = login)
+                session.add(current_fridge)
+                session.commit()
+                is_logged_in = True
+    print(f'Welcome to your fridge, {login}')
+    return current_fridge
+
 if __name__=='__main__':
     print("Welcome to Pantry Planner!")
-    login = input("Enter Name:\n> ")
-    current_fridge = Fridge.get_fridge(login)
+    current_fridge = login()
     user_input = ""
     while user_input != 'close':
         user_input = input("\nWhat do you want to do?\n> ").strip().lower()
@@ -129,9 +146,7 @@ if __name__=='__main__':
                 print("You can't make anything with what's in your fridge :(\nAdd some more ingredients to your fridge to see some recipes!")
 
         elif user_input == "swap user":
-            login = input("Enter Name:\n> ")
-            current_fridge = Fridge.get_fridge(login)
-            print(f'Welcome to your fridge, {login}!')
+            current_fridge = login()
 
 
         elif user_input != "close":
